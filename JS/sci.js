@@ -3,12 +3,14 @@ document.addEventListener("DOMContentLoaded", function () {
     let osm_source = new ol.source.OSM()
     let tdt_source = new ol.source.XYZ(
         {url: "http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060",                                              
-        wrapX: false 
+        wrapX: false,
+        crossOrigin: 'anonymous'
         }
     )
     let tdt_img_source = new ol.source.XYZ(
         {url:"http://t0.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060",
-        wrapX:false
+        wrapX:false,
+        crossOrigin: 'anonymous'
         }
     )
     let my_maplayer = new ol.layer.Tile(
@@ -91,4 +93,5 @@ document.addEventListener("DOMContentLoaded", function () {
         maxZoom: 16
     });
     }
+
 });
