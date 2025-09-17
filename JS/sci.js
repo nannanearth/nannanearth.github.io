@@ -2,13 +2,13 @@ document.addEventListener("DOMContentLoaded", function () {
     src="https://cdn.jsdelivr.net/npm/ol@v7.3.0/dist/ol.js"
     let osm_source = new ol.source.OSM()
     let tdt_source = new ol.source.XYZ(
-        {url: "http://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060",                                              
+        {url: "https://t0.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060",                                              
         wrapX: false,
         crossOrigin: 'anonymous'
         }
     )
     let tdt_img_source = new ol.source.XYZ(
-        {url:"http://t0.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060",
+        {url:"https://t0.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060",
         wrapX:false,
         crossOrigin: 'anonymous'
         }
@@ -95,3 +95,4 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
+
