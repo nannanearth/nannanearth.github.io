@@ -1,0 +1,8 @@
+<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+  <!-- 文件形状 -->
+  <rect x="2" y="4" width="12" height="8" rx="1" ry="1" fill="none" stroke="currentColor" stroke-width="1"/>
+  <!-- 文件顶部 -->
+  <rect x="4" y="2" width="8" height="2" fill="none" stroke="currentColor" stroke-width="1"/>
+  <!-- 上传箭头 -->
+  <path d="M8 6L11 9L9.5 9L9.5 12L6.5 12L6.5 9L5 9L8 6Z" fill="none" stroke="currentColor" stroke-width="1"/>
+</svg>

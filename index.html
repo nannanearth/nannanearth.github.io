@@ -37,7 +37,7 @@
             </symbol>
 
             <symbol id="check2-circle" viewBox="0 0 16 16">
-                <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z"/>
+                <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 0 0-11 0z"/>
                 <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z"/>
             </symbol>
 
@@ -103,7 +103,9 @@
                     </a>
                     <ul class="nav nav-pills">
                         <li class="nav-item"><a href="#kmap" class="nav-link active" aria-current="page">首页</a></li>
-                        <li class="nav-item"><a href="#introduction" class="nav-link">数据处理</a></li>
+                        <li class="nav-item">
+                            <button class="nav-link" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">数据处理</button>
+                        </li>
                         <li class="nav-item"><a href="#skill" class="nav-link">教程中心</a></li>
                         <li class="nav-item"><a href="#ternumber" class="nav-link">帮助中心</a></li>
                     </ul>
@@ -134,13 +136,12 @@
                                     <select class="form-select" id="sel2" name="sellist1">
                                         <option value="TDT">天地图矢量图</option>
                                         <option value="TDT_img">天地图影像图</option>
-                                        <option value="TDT_veimg">天地图地形图</option>
+                                        <option value="TDT_ter_img">天地图地形图</option>
                                         <option>其他地图</option>
                                     </select>
                                     <select class="form-select" id="sel3" name="sellist1">
                                         <option value="arcgis">ArcGIS</option>
                                         <option value="arcgis_img">ArcGIS高清影像图</option>
-                                        <option value="TDT_ter_img">2</option>
                                         <option>其他地图</option>
                                     </select>
                                     <!-- <button class="card-button" onclick="changeMap('OSM')">OSM</button>
@@ -182,50 +183,108 @@
                 </div>
             </div>
             <div class="map-container">
-                <div id="map"></div>
+            <div id="map"></div>
             </div>
         </section>
         
-         <section id="introduction">
-            
-
-
-         </section>
-         <section id="skill">
-            <div class="dropdown-menu d-flex align-items-stretch p-3 rounded-3 shadow-lg" style="width: 600px" id="dropdownMega">
-                <nav class="d-grid gap-2 col-8">
-                    <a href="#" class="btn btn-hover-light d-flex align-items-center gap-3 py-2 px-3 lh-sm">
-                    <svg class="bi" width="32" height="32"><use xlink:href="#image-fill"/></svg>
-                    <div>
-                        <strong class="d-block">Features</strong>
-                        <small>Take a tour through the product</small>
+         <!-- 修复数据处理模块，使用Bootstrap 5的offcanvas组件 -->
+                <section id="dataprocess">
+                    <!-- 右侧offcanvas侧边栏 -->
+                    <div class="offcanvas offcanvas-end w-64" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                        <div class="offcanvas-header">
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body p-0">
+                            <div id="accordion-data" class="w-full">
+                                <div class="card border-0">
+                                    <div class="card-header">
+                                        <a class="btn w-full text-left" data-bs-toggle="collapse" href="#collapseDataOne">
+                                        数据格式转换
+                                        </a>
+                                    </div>
+                                    <div id="collapseDataOne" class="collapse show" data-bs-parent="#accordion-data">
+                                        <div class="card-body">
+                                            <div class="button_style1">
+                                                <button class="card-button" onclick="convertToGeoJSON()">转为GeoJSON</button>
+                                                <button class="card-button" onclick="convertToShapefile()">转为Shapefile</button>
+                                                <button class="card-button" onclick="convertToKML()">转为KML</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card border-0">
+                                    <div class="card-header">
+                                        <a class="collapsed btn w-full text-left" data-bs-toggle="collapse" href="#collapseDataTwo">
+                                        数据分析工具
+                                    </a>
+                                    </div>
+                                    <div id="collapseDataTwo" class="collapse" data-bs-parent="#accordion-data">
+                                        <div class="card-body">
+                                            <button class="card-button" onclick="spatialAnalysis()">空间分析</button>
+                                            <button class="card-button" onclick="statisticalAnalysis()">统计分析</button>
+                                            <button class="card-button" onclick="bufferAnalysis()">缓冲区分析</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card border-0">
+                                    <div class="card-header">
+                                        <a class="collapsed btn w-full text-left" data-bs-toggle="collapse" href="#collapseDataThree">
+                                        数据导出
+                                        </a>
+                                    </div>
+                                    <div id="collapseDataThree" class="collapse" data-bs-parent="#accordion-data">
+                                        <div class="card-body">
+                                            <button class="card-button" onclick="exportCSV()">导出CSV</button>
+                                            <button class="card-button" onclick="exportExcel()">导出Excel</button>
+                                            <button class="card-button" onclick="exportImage()">导出图片</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    </a>
-                    <a href="#" class="btn btn-hover-light d-flex align-items-center gap-3 py-2 px-3 lh-sm">
-                    <svg class="bi" width="32" height="32"><use xlink:href="#question-circle"/></svg>
-                    <div>
-                        <strong class="d-block">Support</strong>
-                        <small>Get help from our support crew</small>
+                    
+                    <!-- 地图容器 -->
+                    <div class="map-container">
+                        <div id="data-map"></div>
                     </div>
-                    </a>
-                </nav>
-            </div>
-         </section>
-         <section id="ternumber">
-            <p>
-                <dl>
-                    <dd>联系方式如下
-                        <dt>
-                            <img src="image/wchat.png" width="50" height="50">
-                            <a>微信:666666666</a>
-                        </dt>
-                        <dt>
-                            <img src="image/QQ.png" width="50" height="50">
-                            <a>QQ:12345678</a>
-                        </dt>
-                    </dd>
-                </dl>
-            </p>
-         </section>
-    </body>
-</html>
+                </section>
+
+                 <section id="skill">
+                    <div class="dropdown-menu d-flex align-items-stretch p-3 rounded-3 shadow-lg" style="width: 600px" id="dropdownMega">
+                        <nav class="d-grid gap-2 col-8">
+                            <a href="#" class="btn btn-hover-light d-flex align-items-center gap-3 py-2 px-3 lh-sm">
+                            <svg class="bi" width="32" height="32"><use xlink:href="#image-fill"/></svg>
+                            <div>
+                                <strong class="d-block">Features</strong>
+                                <small>Take a tour through the product</small>
+                            </div>
+                            </a>
+                            <a href="#" class="btn btn-hover-light d-flex align-items-center gap-3 py-2 px-3 lh-sm">
+                            <svg class="bi" width="32" height="32"><use xlink:href="#question-circle"/></svg>
+                            <div>
+                                <strong class="d-block">Support</strong>
+                                <small>Get help from our support crew</small>
+                            </div>
+                            </a>
+                        </nav>
+                    </div>
+                 </section>
+                 <section id="ternumber">
+                    <p>
+                        <dl>
+                            <dd>联系方式如下
+                                <dt>
+                                    <img src="image/wchat.png" width="50" height="50">
+                                    <a>微信:666666666</a>
+                                </dt>
+                                <dt>
+                                    <img src="image/QQ.png" width="50" height="50">
+                                    <a>QQ:12345678</a>
+                                </dt>
+                            </dd>
+                        </dl>
+                    </p>
+                 </section>
+            </body>
+        </html>
