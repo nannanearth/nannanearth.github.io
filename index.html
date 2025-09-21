@@ -21,12 +21,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.2/umd/popper.min.js"></script>
         <!-- Bootstrap5 核心 JavaScript 文件 -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/js/bootstrap.min.js"></script>    
-        <style>
-            #map{
-                width: 100%;
-                height: 100%;
-            }
-        </style>
     <body>
         <svg xmlns="https://www.w3.org/2000/svg" style="display: none;">
             <symbol id="bootstrap" viewBox="0 0 118 94">
@@ -101,24 +95,90 @@
                 <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
             </symbol>
         </svg>
+        <div class="container-fluid">
+                <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+                    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+                        <img class="me-2 custom-image" src="image/web_logo.jpg" alt="Custom Image">
+                        <span class="fs-4">GIS二次开发</span>
+                    </a>
+                    <ul class="nav nav-pills">
+                        <li class="nav-item"><a href="#kmap" class="nav-link active" aria-current="page">首页</a></li>
+                        <li class="nav-item"><a href="#introduction" class="nav-link">数据处理</a></li>
+                        <li class="nav-item"><a href="#skill" class="nav-link">教程中心</a></li>
+                        <li class="nav-item"><a href="#ternumber" class="nav-link">帮助中心</a></li>
+                    </ul>
+                </header>
+        </div>     
+        <main>
+           
+        </main>
 
-        <nav> 
-            <a href="#kmap">地图中心</a>
-            <a href="#introduction">数据处理中心</a>
-            <a href="#skill">数据中心</a>
-            <a href="#git">未知</a>
-            <a href="#ternumber">帮助中心</a>
-        </nav>
         <section id="kmap">
             <div class="left-panel">
-                <div class="button_style1">
-                    <button class="card-button" onclick="toggleLayer()">关闭底图显示</button>
-                    <button class="card-button" onclick="changeMap('OSM')">切换至OSM矢量图</button>
-                    <button class="card-button" onclick="changeMap('TDT')">切换至天地矢量图</button>
-                    <button class="card-button" onclick="changeMap('TDT_img')">切换至天地影像图</button>
-                    <label for="jsonFile" class="card-button">导入GeoJSON文件
-                    <input type="file" id="jsonFile" accept=".json,application/geo+json">
-                    </label>
+                <div id="accordion">
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="btn" data-bs-toggle="collapse" href="#collapseOne">
+                            切换底图
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="collapse show" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                <div class="button_style1">
+                                    <!-- sel1是监听器，且唯一，具体绑定在js中设置 -->
+                                    <select class="form-select" id="sel1" name="sellist1">
+                                        <option value="OSM">OpenStreetMap</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                    </select>
+                                    <select class="form-select" id="sel2" name="sellist1">
+                                        <option value="TDT">天地图矢量图</option>
+                                        <option value="TDT_img">天地图影像图</option>
+                                        <option value="TDT_veimg">天地图地形图</option>
+                                        <option>其他地图</option>
+                                    </select>
+                                    <select class="form-select" id="sel3" name="sellist1">
+                                        <option value="arcgis">ArcGIS</option>
+                                        <option value="arcgis_img">ArcGIS高清影像图</option>
+                                        <option value="TDT_ter_img">2</option>
+                                        <option>其他地图</option>
+                                    </select>
+                                    <!-- <button class="card-button" onclick="changeMap('OSM')">OSM</button>
+                                    <button class="card-button" onclick="changeMap('TDT')">天地地图图</button>
+                                    <button class="card-button" onclick="changeMap('TDT_img')">高德地图</button> -->
+                                    <button class="card-button" onclick="toggleLayer()">关闭底图显示</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseTwo">
+                            数据导入
+                        </a>
+                        </div>
+                        <div id="collapseTwo" class="collapse" data-bs-parent="#accordion">
+                            <div class="card-body">
+                                <label for="jsonFile" class="card-button">导入GeoJSON数据<input type="file" id="jsonFile" accept=".json,application/geo+json"></label>
+                                <label for="jsonFile" class="card-button">导入TIF数据<input type="file" id="jsonFile" accept=".json,application/geo+json"></label>
+                                <label for="jsonFile" class="card-button">111111111<input type="file" id="jsonFile" accept=".json,application/geo+json"></label>
+                                <label for="jsonFile" class="card-button">211111111<input type="file" id="jsonFile" accept=".json,application/geo+json"></label>
+                                <label for="jsonFile" class="card-button">211111111<input type="file" id="jsonFile" accept=".json,application/geo+json"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <a class="collapsed btn" data-bs-toggle="collapse" href="#collapseThree">
+                            选项三
+                            </a>
+                        </div>
+                        <div id="collapseThree" class="collapse" data-bs-parent="#accordion">
+                            <div class="card-body">
+                            #3 内容：菜鸟教程 -- 学的不仅是技术，更是梦想！！！
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="map-container">
@@ -127,16 +187,8 @@
         </section>
         
          <section id="introduction">
-            <div class="dropdown">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">
-                    下拉菜单按钮
-                </button>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">链接 1</a>
-                <a class="dropdown-item" href="#">链接 2</a>
-                <a class="dropdown-item" href="#">链接 3</a>
-            </div>
-            </div>
+            
+
 
          </section>
          <section id="skill">
@@ -158,49 +210,6 @@
                     </a>
                 </nav>
             </div>
-         </section>
-         <section id="git">
-            <h1>我的项目经历如下</h1>
-            <table border="1" cellpadding="8">
-                <thead>
-                <tr>
-                    <th>项目名称</th>
-                    <th>项目介绍</th>
-                    <th>项目链接</th>
-                </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>CSDN</td>
-                        <td>一些关于学习编程与遥感领域得实验</td>
-                        <td>
-                            <a href="https://blog.csdn.net/qq_55750626?spm=1000.2115.3001.5343">
-                                点击这里就可以跳转
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>知乎</td>
-                        <td>关于一些收藏的网页</td>
-                        <td>
-                            <a href="https://www.zhihu.com/people/cheng-nan-65-54-31">
-                                点击这里就可以跳转
-                            </a>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>GITHUB</td>
-                        <td>关于一些收藏的开源代码库</td>
-                        <td>
-                            <a href="https://github.com/nannanearth">
-                                点击这里就可以跳转
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
          </section>
          <section id="ternumber">
             <p>

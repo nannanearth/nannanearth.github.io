@@ -9,6 +9,23 @@ document.addEventListener("DOMContentLoaded", function () {
         {url:"https://t0.tianditu.gov.cn/DataServer?T=img_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060"
         }
     )
+    let tdt_ter_img_source = new ol.source.XYZ(
+        {url:"https://t0.tianditu.gov.cn/DataServer?T=ter_w&x={x}&y={y}&l={z}&tk=9aeba3de18960d7d3351c3b12697b060"
+        }
+    )
+    let arcgis_source = new ol.source.XYZ({
+        url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
+    });
+    let arcgis_img_source = new ol.source.XYZ({
+        url: 'https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}.png'
+    });
+    const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.forEach(l => l.classList.remove('active'));
+                link.classList.add('active');
+            });
+        });
     let my_maplayer = new ol.layer.Tile(
         {title: "天地图矢量图层",                
         source: tdt_source}
@@ -39,26 +56,52 @@ document.addEventListener("DOMContentLoaded", function () {
             case 'TDT_img':
                 my_maplayer.setSource(tdt_img_source)
                 break;
+            case 'TDT_ter_img':
+                my_maplayer.setSource(tdt_ter_img_source)
+                break;
+            case 'arcgis':
+                my_maplayer.setSource(arcgis_source)
+                break;
+            case 'arcgis_img':
+                my_maplayer.setSource(arcgis_img_source)
+                break;
         }
     }
     const fileInput = document.getElementById('jsonFile');
-    
-    fileInput.addEventListener('change', handleFile);
+    document.getElementById('sel1').addEventListener('change', function() {
+    let selectedValue = this.value;
+    changeMap(selectedValue);
+        });
+    document.getElementById('sel2').addEventListener('change', function () {
+        let selectedValue = this.value;
+        changeMap(selectedValue);
+    });
+    document.getElementById('sel3').addEventListener('change', function () {
+        let selectedValue = this.value;
+        changeMap(selectedValue);
+    });
+    sel1.dispatchEvent(new Event('change'));
+    sel2.dispatchEvent(new Event('change'));
+    sel3.dispatchEvent(new Event('change'));
+    changeMap(sel1.value);
+    changeMap(sel2.value);
+    changeMap(sel3.value);
+    // fileInput.addEventListener('change', handleFile);
 
     function handleFile(evt) {
     const file = evt.target.files[0];
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = e => {
-        try {
-        const geojson = JSON.parse(e.target.result);
-        addGeoJsonToMap(geojson);
-        } catch (err) {
-        alert('JSON 解析失败：' + err.message);
-        }
-    };
-    reader.readAsText(file);
+        reader.onload = e => {
+            try {
+            const geojson = JSON.parse(e.target.result);
+            addGeoJsonToMap(geojson);
+            } catch (err) {
+            alert('JSON 解析失败：' + err.message);
+            }
+        };
+        reader.readAsText(file);
     }
 
     function addGeoJsonToMap(geojson) {
@@ -73,11 +116,11 @@ document.addEventListener("DOMContentLoaded", function () {
     window.userLayer = new ol.layer.Vector({
         source: source,
         style: new ol.style.Style({
-        fill: new ol.style.Fill({ color: 'rgba(255,165,0,0.4)' }),
-        stroke: new ol.style.Stroke({ color: '#ff6600', width: 2 }),
+        fill: new ol.style.Fill({ color: 'rgba(255, 166, 0, 0)' }),
+        stroke: new ol.style.Stroke({ color: '#f37e08ff', width: 2 }),
         image: new ol.style.Circle({
             radius: 6,
-            fill: new ol.style.Fill({ color: '#ff6600' })
+            fill: new ol.style.Fill({ color: '#f7f2ee' })
         })
         })
     });
@@ -91,4 +134,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 });
-
+ window.addEventListener('load', function() {
+        var hash = window.location.hash;
+        if (hash) {
+            var element = document.querySelector(hash);
+            if (element) {
+                var yOffset = -60; 
+                var y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                window.scrollTo({top: y, behavior: 'smooth'});
+            }
+        }
+    });
